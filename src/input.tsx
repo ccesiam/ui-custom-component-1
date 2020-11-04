@@ -5,23 +5,40 @@ import { component } from './utils/wrapper';
 declare const manywho: IManywho;
 
 class CustomInput extends React.Component<IComponentProps> {
+    state = {
+        maxCahracters : 100,
+        remainingcount : 100,
+    };
 
-    onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         this.props.onChange(e.target.value);
-    }
 
-    onBlur = () => {
-        this.props.onEvent();
+        const currentText = e.target.value;
+        const characterCount = currentText.length;
+
+        this.state.remainingcount = this.state.maxCahracters - characterCount;
+        const inputElement: HTMLInputElement = document.getElementById('counter') as HTMLInputElement;
+
+        inputElement.value = this.state.remainingcount.toString();
+
     }
 
     render() {
         return (
-            <input
-                type="text"
-                value={this.props.getContentValue<string>()}
+            /*
+            <span>Hello World</span>
+            */
+            <div>
+            <textarea
+                placeholder="Enter some text"
                 onChange={this.onChange}
-                onBlur={this.onBlur}
+                maxLength={100}
+                rows={5}
+                cols={100}
             />
+            <br />
+            Max Characters : <input id="counter" value={this.state.remainingcount} />
+         </div>
         );
     }
 }
