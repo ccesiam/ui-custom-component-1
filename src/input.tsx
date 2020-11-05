@@ -5,22 +5,27 @@ import { component } from './utils/wrapper';
 declare const manywho: IManywho;
 
 class CustomInput extends React.Component<IComponentProps> {
-    state = {
-        maxCahracters : 100,
-        remainingcount : 100,
-    };
+
+    constructor(props: any) {
+        super(props);
+        const model = manywho.model.getComponent(this.props.id, this.props.flowKey);
+        this.props.model.maxSize = model.maxSize;
+        this.props.model.height = model.height;
+        this.props.model.width = model.width;
+    }
 
     onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         this.props.onChange(e.target.value);
 
+        // const maxCharacters = this.props.model.maxSize;
+        const maxCharacters = this.props.model.maxSize;
         const currentText = e.target.value;
         const characterCount = currentText.length;
 
-        this.state.remainingcount = this.state.maxCahracters - characterCount;
+        const remainingcount = maxCharacters - characterCount;
         const inputElement: HTMLInputElement = document.getElementById('counter') as HTMLInputElement;
 
-        inputElement.value = this.state.remainingcount.toString();
-
+        inputElement.value = remainingcount.toString();
     }
 
     render() {
@@ -29,18 +34,20 @@ class CustomInput extends React.Component<IComponentProps> {
             <span>Hello World</span>
             */
             <div>
+
             <textarea
                 placeholder="Enter some text"
                 onChange={this.onChange}
-                maxLength={100}
-                rows={5}
-                cols={100}
+                maxLength={this.props.model.maxSize}
+                rows={this.props.model.height}
+                cols={this.props.model.width}
             />
             <br />
-            Max Characters : <input id="counter" value={this.state.remainingcount} />
+            Max Characters : <input id="counter" value={this.props.model.maxSize} />
          </div>
         );
     }
+
 }
 
 manywho.component.register('custom-input', component(CustomInput, true));
