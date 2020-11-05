@@ -12,6 +12,7 @@ class CustomInput extends React.Component<IComponentProps> {
         this.props.model.maxSize = model.maxSize;
         this.props.model.height = model.height;
         this.props.model.width = model.width;
+        this.props.model.id = model.id;
     }
 
     onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -23,7 +24,7 @@ class CustomInput extends React.Component<IComponentProps> {
         const characterCount = currentText.length;
 
         const remainingcount = maxCharacters - characterCount;
-        const inputElement: HTMLInputElement = document.getElementById('counter') as HTMLInputElement;
+        const inputElement: HTMLInputElement = document.getElementById(this.props.model.id) as HTMLInputElement;
 
         inputElement.value = remainingcount.toString();
     }
@@ -43,7 +44,7 @@ class CustomInput extends React.Component<IComponentProps> {
                 cols={this.props.model.width}
             />
             <br />
-            Max Characters : <input id="counter" value={this.props.model.maxSize} />
+            Max Characters : <input id={this.props.model.id} value={this.props.model.maxSize} readOnly={true} />
          </div>
         );
     }
