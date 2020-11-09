@@ -42,6 +42,7 @@ class CustomInput extends React.Component<IComponentProps> {
                 maxLength={this.props.model.maxSize}
                 rows={this.props.model.height}
                 cols={this.props.model.width}
+
             />
             <br />
             Max Characters : <input id={this.props.model.id} value={this.props.model.maxSize} readOnly={true} />
