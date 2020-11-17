@@ -52,6 +52,6 @@ class CustomInput extends React.Component<IComponentProps> {
 
 }
 
-manywho.component.register('custom-input', component(CustomInput, true));
+manywho.component.register('custom-textarea', component(CustomInput, true));
 
 export default CustomInput;
