@@ -27,6 +27,8 @@ class CustomInput extends React.Component<IComponentProps> {
         const inputElement: HTMLInputElement = document.getElementById(this.props.model.id) as HTMLInputElement;
 
         inputElement.value = remainingcount.toString();
+
+        this.setState({content : e.currentTarget.value});
     }
 
     render() {
