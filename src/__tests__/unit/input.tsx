@@ -37,7 +37,8 @@ describe('Input Component', () => {
     });
 
     it('registers', () => {
-        expect(manywho.component.register).toHaveBeenCalledWith('custom-input', expect.any(Function));
+        //expect(manywho.component.register).toHaveBeenCalledWith('custom-input', expect.any(Function));
+        expect(manywho.component.register).toHaveBeenCalledWith('custom-textarea', expect.any(Function));
     });
 
 });

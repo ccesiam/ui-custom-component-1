@@ -13,12 +13,14 @@ class CustomInput extends React.Component<IComponentProps> {
         this.props.model.height = model.height;
         this.props.model.width = model.width;
         this.props.model.id = model.id;
+
+        let value = this.props.getContentValue() as string;
+
     }
 
     onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         this.props.onChange(e.target.value);
 
-        // const maxCharacters = this.props.model.maxSize;
         const maxCharacters = this.props.model.maxSize;
         const currentText = e.target.value;
         const characterCount = currentText.length;
@@ -28,7 +30,11 @@ class CustomInput extends React.Component<IComponentProps> {
 
         inputElement.value = remainingcount.toString();
 
-        this.setState({content : e.currentTarget.value});
+        // this.setState({content : e.currentTarget.value});
+    }
+
+    onBlur = () => {
+       this.props.onEvent();
     }
 
     render() {
@@ -44,7 +50,7 @@ class CustomInput extends React.Component<IComponentProps> {
                 maxLength={this.props.model.maxSize}
                 rows={this.props.model.height}
                 cols={this.props.model.width}
-
+                value={this.props.getContentValue<string>()}
             />
             <br />
             Max Characters : <input id={this.props.model.id} value={this.props.model.maxSize} readOnly={true} />
@@ -55,5 +61,6 @@ class CustomInput extends React.Component<IComponentProps> {
 }
 
 manywho.component.register('custom-textarea', component(CustomInput, true));
+// manywho.component.register('custom-input', component(CustomInput, true));
 
 export default CustomInput;
