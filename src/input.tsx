@@ -4,7 +4,12 @@ import { component } from './utils/wrapper';
 
 declare const manywho: IManywho;
 
-class CustomInput extends React.Component<IComponentProps> {
+interface IInputTextAreaState {
+    textAreaValue: string;
+    charLimit: number;
+}
+
+class CustomInput extends React.Component<IComponentProps, IInputTextAreaState> {
 
     constructor(props: any) {
         super(props);
@@ -14,11 +19,23 @@ class CustomInput extends React.Component<IComponentProps> {
         this.props.model.width = model.width;
         this.props.model.id = model.id;
 
-        let value = this.props.getContentValue() as string;
-
+        const maxChar = model.maxSize;
+        const value = this.props.getContentValue() as string;
+        if (value) {
+            this.state = {
+                textAreaValue : value,
+                charLimit : maxChar,
+            };
+        } else {
+            this.state = {
+                textAreaValue : '',
+                charLimit : maxChar,
+            };
+        }
     }
 
     onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        this.setState({ textAreaValue: e.currentTarget.value as string });
         this.props.onChange(e.target.value);
 
         const maxCharacters = this.props.model.maxSize;
@@ -34,7 +51,7 @@ class CustomInput extends React.Component<IComponentProps> {
     }
 
     onBlur = () => {
-       this.props.onEvent();
+       // this.props.onEvent();
     }
 
     render() {
@@ -53,7 +70,8 @@ class CustomInput extends React.Component<IComponentProps> {
                 value={this.props.getContentValue<string>()}
             />
             <br />
-            Max Characters : <input id={this.props.model.id} value={this.props.model.maxSize} readOnly={true} />
+            {/* Max Characters : <input id={this.props.model.id} value={this.props.model.maxSize} readOnly={true} /> */}
+            <p>Remaining Characters: {this.state.charLimit - this.state.textAreaValue.length}</p>
          </div>
         );
     }
